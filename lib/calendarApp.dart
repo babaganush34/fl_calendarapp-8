@@ -1,6 +1,9 @@
+import 'package:fl_calendarapp_8/_calendarPageState.dart';
 import 'package:flutter/material.dart';
 
 class CalendarApp extends StatelessWidget {
+  const CalendarApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,7 +13,7 @@ class CalendarApp extends StatelessWidget {
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
       ),
-      home: CalendarApp(),
+      home: const CalendarPage(),
     );
   }
 

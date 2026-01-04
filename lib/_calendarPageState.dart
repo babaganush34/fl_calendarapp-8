@@ -3,7 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
-  
+
   @override
   State<StatefulWidget> createState() => _CalendarPageState();
 }
@@ -112,6 +112,43 @@ class _CalendarPageState extends State<CalendarPage> {
                       child: ListTile(
                         leading: Icon(Icons.event),
                         title: Text(events[index]),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () async {
+                            final shouldDelete = await showDialog<bool>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Подтверждение'),
+                                content: const Text('Удалить это событие?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, false),
+                                    child: const Text('Отмена'),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.red,
+                                    ),
+                                    onPressed: () =>
+                                        Navigator.pop(context, true),
+                                    child: const Text('Удалить'),
+                                  ),
+                                ],
+                              ),
+                            );
+                            if (shouldDelete == true) {
+                              final key = DateTime(
+                                _selectedDay.year,
+                                _selectedDay.month,
+                                _selectedDay.day,
+                              );
+                              setState(() {
+                                _events[key]?.removeAt(index);
+                              });
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ),
